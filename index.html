@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Catur Achmad Widiyanto — IT Support & Web Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F5F0;
+    --bg2: #EFECEA;
+    --ink: #1A1A18;
+    --ink2: #5A5A56;
+    --ink3: #9A9A94;
+    --accent: #1D6B52;
+    --accent-light: #E1F5EE;
+    --border: rgba(26,26,24,0.12);
+    --radius: 12px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 5vw;
+    background: rgba(247,245,240,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink2);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── SECTIONS ── */
+  section { padding: 7rem 5vw; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-top: 8rem;
+    padding-bottom: 5rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.2s forwards;
+  }
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    max-width: 16ch;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.35s forwards;
+  }
+  .hero-title em { font-style: italic; color: var(--accent); }
+  .hero-sub {
+    margin-top: 2.5rem;
+    font-size: 1.05rem;
+    color: var(--ink2);
+    font-weight: 300;
+    max-width: 50ch;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.55s forwards;
+  }
+  .hero-actions {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    margin-top: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.7s forwards;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.8rem 1.8rem;
+    font-size: 0.88rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: all 0.22s;
+    cursor: pointer;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-primary { background: var(--ink); color: var(--bg); }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
+  .btn-secondary { background: transparent; color: var(--ink); border: 1px solid var(--border); }
+  .btn-secondary:hover { border-color: var(--ink); }
+
+  .hero-bg-text {
+    position: absolute; right: -2vw; bottom: -3rem;
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(8rem, 22vw, 18rem);
+    line-height: 1;
+    color: rgba(26,26,24,0.04);
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  /* ── ABOUT ── */
+  #about {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 0.5rem;
+  }
+  .section-number {
+    font-family: 'DM Serif Display', serif;
+    font-size: 4rem;
+    color: rgba(26,26,24,0.07);
+    line-height: 1;
+  }
+  .about-text h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    margin-bottom: 1.25rem;
+    color: var(--ink);
+  }
+  .about-text p { color: var(--ink2); font-weight: 300; margin-bottom: 1rem; }
+  .about-facts {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1rem; margin-top: 2rem;
+  }
+  .fact-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem 1.4rem;
+  }
+  .fact-card .label { font-size: 0.75rem; color: var(--ink3); margin-bottom: 0.25rem; }
+  .fact-card .value { font-weight: 500; font-size: 0.95rem; }
+
+  /* ── SKILLS ── */
+  #skills { background: var(--ink); }
+  #skills .section-label { color: rgba(247,245,240,0.4); }
+  #skills h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--bg);
+    letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+  }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1px;
+    border: 1px solid rgba(247,245,240,0.08);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .skill-item {
+    padding: 1.8rem;
+    background: rgba(247,245,240,0.03);
+    transition: background 0.2s;
+  }
+  .skill-item:hover { background: rgba(247,245,240,0.07); }
+  .skill-icon {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.8rem;
+  }
+  .skill-name {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--bg);
+    margin-bottom: 0.4rem;
+  }
+  .skill-desc { font-size: 0.82rem; color: rgba(247,245,240,0.45); font-weight: 300; }
+  .skill-bar {
+    margin-top: 1rem;
+    height: 2px;
+    background: rgba(247,245,240,0.1);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .skill-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    width: 0;
+    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ── PROJECTS ── */
+  #projects .section-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem;
+  }
+  #projects h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.02em;
+  }
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+  .project-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    transition: transform 0.22s, box-shadow 0.22s;
+    display: flex; flex-direction: column;
+  }
+  .project-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(26,26,24,0.08); }
+  .project-tag {
+    display: inline-block;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.75rem;
+    border-radius: 100px;
+    margin-bottom: 1.2rem;
+    align-self: flex-start;
+  }
+  .project-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.35rem;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.75rem;
+  }
+  .project-card p { font-size: 0.88rem; color: var(--ink2); font-weight: 300; flex: 1; margin-bottom: 1.5rem; }
+  .project-stack { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+  .stack-pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.6rem;
+    background: var(--bg2);
+    color: var(--ink2);
+    border-radius: 4px;
+  }
+  .project-links { display: flex; gap: 0.75rem; }
+  .project-link {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    display: flex; align-items: center; gap: 0.3rem;
+    transition: opacity 0.2s;
+  }
+  .project-link:hover { opacity: 0.7; }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+  #contact h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+  }
+  #contact h2 em { font-style: italic; color: var(--accent); }
+  #contact .sub { color: var(--ink2); font-weight: 300; max-width: 42ch; margin: 0 auto 2.5rem; }
+  .contact-form {
+    max-width: 500px; margin: 0 auto;
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .contact-form input:focus,
+  .contact-form textarea:focus { border-color: var(--accent); }
+  .contact-form textarea { resize: vertical; min-height: 130px; }
+  .contact-form button { align-self: center; }
+  .contact-social {
+    display: flex; justify-content: center; gap: 1.5rem;
+    margin-top: 3rem; flex-wrap: wrap;
+  }
+  .social-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: var(--ink2);
+    text-decoration: none;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .social-link:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2rem 5vw;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  }
+  footer p { font-size: 0.8rem; color: var(--ink3); }
+  .footer-mono { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--ink3); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s, transform 0.7s;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    #about { grid-template-columns: 1fr; gap: 2rem; }
+    .about-facts { grid-template-columns: 1fr; }
+    nav { padding: 1rem 4vw; }
+    .nav-links { gap: 1rem; }
+  }
+  @media (max-width: 480px) {
+    .nav-links { display: none; }
+    section { padding: 5rem 5vw; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">CAW.</a>
+  <ul class="nav-links">
+    <li><a href="#about">Tentang</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Proyek</a></li>
+    <li><a href="#contact">Kontak</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-eyebrow">IT Support & Web Developer ✦ Purwakarta</div>
+  <h1 class="hero-title">
+    Catur Achmad <em>Widiyanto.</em>
+  </h1>
+  <p class="hero-sub">
+    IT Support berpengalaman dalam pengelolaan jaringan, troubleshooting perangkat, administrasi sistem, dan pengembangan web full stack.
+  </p>
+  <div class="hero-actions">
+    <a href="#projects" class="btn btn-primary">Lihat Proyek →</a>
+    <a href="#contact" class="btn btn-secondary">Hubungi Saya</a>
+  </div>
+  <div class="hero-bg-text">IT.</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-left">
+    <p class="section-label">01 — Tentang Saya</p>
+    <div class="section-number">01</div>
+  </div>
+  <div class="about-text reveal">
+    <h2>IT Support yang juga bisa ngoding dari nol sampai production.</h2>
+    <p>
+      Saya adalah IT Support dengan pengalaman dalam pengelolaan jaringan, troubleshooting perangkat,
+      dan administrasi sistem. Terbiasa menangani operasional IT harian mencakup hardware, software, dan jaringan (LAN/WiFi).
+    </p>
+    <p>
+      Memiliki kemampuan dalam konfigurasi MikroTik, manajemen database, serta implementasi sistem
+      berbasis ERP (Odoo). Di sisi lain, saya juga aktif membangun solusi web yang nyata dan sudah dipakai langsung.
+    </p>
+    <div class="about-facts">
+      <div class="fact-card">
+        <div class="label">Lokasi</div>
+        <div class="value">Purwakarta, Indonesia 🇮🇩</div>
+      </div>
+      <div class="fact-card">
+        <div class="label">Spesialisasi</div>
+        <div class="value">IT Support & Web Dev</div>
+      </div>
+      <div class="fact-card">
+        <div class="label">Email</div>
+        <div class="value">wiwid8a@gmail.com</div>
+      </div>
+      <div class="fact-card">
+        <div class="label">Status</div>
+        <div class="value" style="color:var(--accent);">● Open to work</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label">02 — Keahlian</p>
+  <h2>Skills & tech stack.</h2>
+  <div class="skills-grid">
+    <div class="skill-item reveal">
+      <div class="skill-icon">// Support</div>
+      <div class="skill-name">Troubleshooting</div>
+      <div class="skill-desc">Hardware & software, diagnosis cepat dan tepat</div>
+      <div class="skill-bar"><div class="skill-bar-fill" data-width="92"></div></div>
+    </div>
+    <div class="skill-item reveal">
+      <div class="skill-icon">// OS</div>
+      <div class="skill-name">Windows & Linux</div>
+      <div class="skill-desc">Instalasi, konfigurasi, dan administrasi sistem</div>
+      <div class="skill-bar"><div class="skill-bar-fill" data-width="88"></div></div>
+    </div>
+    <div class="skill-item reveal">
+      <div class="skill-icon">// Hardware</div>
+      <div class="skill-name">Perakitan & Maintenance</div>
+      <div class="skill-desc">Rakit PC, maintenance rutin, penggantian komponen</div>
+      <div class="skill-bar"><div class="skill-bar-fill" data-width="90"></div></div>
+    </div>
+    <div class="skill-item reveal">
+      <div class="skill-icon">// Network</div>
+      <div class="skill-name">MikroTik & Jaringan</div>
+      <div class="skill-desc">Konfigurasi LAN/WiFi, routing dasar, manajemen bandwidth</div>
+      <div class="skill-bar"><div class="skill-bar-fill" data-width="78"></div></div>
+    </div>
+    <div class="skill-item reveal">
+      <div class="skill-icon">// Web</div>
+      <div class="skill-name">Web Developer Full Stack</div>
+      <div class="skill-desc">Bangun website dari frontend hingga backend & database</div>
+      <div class="skill-bar"><div class="skill-bar-fill" data-width="75"></div></div>
+    </div>
+    <div class="skill-item reveal">
+      <div class="skill-icon">// ERP</div>
+      <div class="skill-name">Odoo ERP</div>
+      <div class="skill-desc">Implementasi & konfigurasi modul untuk digitalisasi bisnis</div>
+      <div class="skill-bar"><div class="skill-bar-fill" data-width="70"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header">
+    <div>
+      <p class="section-label">03 — Proyek</p>
+      <h2>Karya nyata, sudah live.</h2>
+    </div>
+  </div>
+  <div class="projects-grid">
+
+    <div class="project-card reveal">
+      <span class="project-tag">Infrastruktur</span>
+      <h3>Implementasi RBJ Instansi</h3>
+      <p>
+        Membangun dan mengimplementasikan sistem RBJ (Rancang Bangun Jaringan) di sebuah instansi dari nol hingga dapat digunakan secara operasional, termasuk proses maintenance berkelanjutan.
+      </p>
+      <div class="project-stack">
+        <span class="stack-pill">Jaringan</span>
+        <span class="stack-pill">IT Infra</span>
+        <span class="stack-pill">Maintenance</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <span class="project-tag">Web App</span>
+      <h3>Sistem Penerimaan Siswa Baru</h3>
+      <p>
+        Membangun sistem PSB berbasis website lengkap dengan database untuk mengelola pendaftaran siswa baru secara online di Sekolah Alam Purwakarta.
+      </p>
+      <div class="project-stack">
+        <span class="stack-pill">PHP</span>
+        <span class="stack-pill">MySQL</span>
+        <span class="stack-pill">Web</span>
+      </div>
+      <div class="project-links">
+        <a href="https://psb.sekolahalampurwakarta.sch.id" target="_blank" class="project-link">Buka Website ↗</a>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <span class="project-tag">Website</span>
+      <h3>Website Profil Sekolah</h3>
+      <p>
+        Membuat website profil resmi Sekolah Alam Purwakarta sebagai wajah digital sekolah — menampilkan informasi, program, dan kegiatan sekolah.
+      </p>
+      <div class="project-stack">
+        <span class="stack-pill">HTML/CSS</span>
+        <span class="stack-pill">PHP</span>
+        <span class="stack-pill">CMS</span>
+      </div>
+      <div class="project-links">
+        <a href="https://sekolahalampurwakarta.sch.id" target="_blank" class="project-link">Buka Website ↗</a>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <span class="project-tag">ERP</span>
+      <h3>Digitalisasi ERP Odoo</h3>
+      <p>
+        Membantu membangun tim digitalisasi sekolah dan mengkonfigurasi beberapa modul Odoo ERP untuk mengoptimalkan operasional dan manajemen data sekolah.
+      </p>
+      <div class="project-stack">
+        <span class="stack-pill">Odoo</span>
+        <span class="stack-pill">ERP</span>
+        <span class="stack-pill">PostgreSQL</span>
+        <span class="stack-pill">Python</span>
+      </div>
+      <div class="project-links">
+        <a href="https://erp.sekolahalampurwakarta.sch.id" target="_blank" class="project-link">Buka ERP ↗</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label">04 — Kontak</p>
+  <h2>Mari <em>bekerja sama.</em></h2>
+  <p class="sub">Ada proyek, pertanyaan, atau sekadar ingin ngobrol soal IT? Kirimin pesan, saya akan balas sesegera mungkin.</p>
+  <form class="contact-form reveal" onsubmit="handleSubmit(event)">
+    <input type="text" placeholder="Nama kamu" required />
+    <input type="email" placeholder="Email kamu" required />
+    <textarea placeholder="Ceritakan kebutuhanmu…" required></textarea>
+    <button type="submit" class="btn btn-primary">Kirim Pesan →</button>
+  </form>
+  <div class="contact-social">
+    <a href="https://github.com/basquiasss81" class="social-link">GitHub</a>
+    <a href="https://www.linkedin.com/in/catur-achmad-widiyanto-25140536a/" class="social-link">LinkedIn</a>
+    <a href="https://www.instagram.com/tenacity_81?utm_source=qr&igsh=MW5tMzEweWlsY2tuNA==" class="social-link">Instagram</a>
+    <a href="https://www.facebook.com/share/1DbevUJyQy/" class="social-link">Facebook</a>
+    <a href="https://wa.me/6285174077330" class="social-link">WhatsApp</a>
+    <a href="wiwid8a@gmail.com" class="social-link">Email</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Catur Achmad Widiyanto. Dibuat dengan ☕ dan dedikasi.</p>
+  <span class="footer-mono">wiwid8a@gmail.com</span>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        const bar = entry.target.querySelector('.skill-bar-fill');
+        if (bar) bar.style.width = bar.dataset.width + '%';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  reveals.forEach(el => observer.observe(el));
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.textContent = 'Terkirim! ✓';
+    btn.style.background = 'var(--accent)';
+    setTimeout(() => {
+      btn.textContent = 'Kirim Pesan →';
+      btn.style.background = '';
+      e.target.reset();
+    }, 3000);
+  }
+</script>
+</body>
+</html>
