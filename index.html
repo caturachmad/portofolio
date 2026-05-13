@@ -60,6 +60,52 @@
   }
   .nav-links a:hover { color: var(--accent); }
 
+  /* ── HAMBURGER ── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+    z-index: 101;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--ink);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Mobile nav overlay */
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 99;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+  }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav a {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.5rem;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+    transition: color 0.2s;
+  }
+  .mobile-nav a:hover { color: var(--accent); }
+
   /* ── SECTIONS ── */
   section { padding: 7rem 5vw; }
 
@@ -161,6 +207,52 @@
     color: rgba(26,26,24,0.07);
     line-height: 1;
   }
+
+  /* ── PROFILE PHOTO ── */
+  .profile-photo-wrap {
+    margin-top: 1.5rem;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+  }
+  .profile-photo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: none;
+  }
+  .profile-photo-wrap img.loaded { display: block; }
+  .profile-photo-wrap img.loaded + .profile-placeholder { display: none; }
+  .profile-placeholder {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0.6rem;
+  }
+  .profile-placeholder svg { opacity: 0.25; }
+  .profile-placeholder span {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--ink3);
+    text-transform: uppercase;
+    text-align: center;
+    padding: 0 1rem;
+  }
+  /* subtle green border accent */
+  .profile-photo-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    box-shadow: inset 0 0 0 1px rgba(29,107,82,0.15);
+    pointer-events: none;
+  }
   .about-text h2 {
     font-family: 'DM Serif Display', serif;
     font-size: clamp(1.8rem, 3vw, 2.4rem);
@@ -251,11 +343,67 @@
     background: white;
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 2rem;
+    overflow: hidden;
     transition: transform 0.22s, box-shadow 0.22s;
     display: flex; flex-direction: column;
   }
   .project-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(26,26,24,0.08); }
+
+  /* ── PROJECT PHOTO PLACEHOLDER ── */
+  .project-photo {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .project-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: none; /* hidden until image is loaded */
+  }
+  .project-photo img.loaded { display: block; }
+  .project-photo img.loaded + .photo-placeholder-inner { display: none; }
+  .photo-placeholder-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    pointer-events: none;
+  }
+  .photo-placeholder-inner svg { opacity: 0.3; }
+  .photo-placeholder-inner span {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: var(--ink3);
+    text-transform: uppercase;
+  }
+  /* hover overlay on photo */
+  .project-photo::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: rgba(29,107,82,0.08);
+    opacity: 0;
+    transition: opacity 0.22s;
+  }
+  .project-card:hover .project-photo::after { opacity: 1; }
+
+  .project-body {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
   .project-tag {
     display: inline-block;
     background: var(--accent-light);
@@ -285,7 +433,7 @@
     color: var(--ink2);
     border-radius: 4px;
   }
-  .project-links { display: flex; gap: 0.75rem; }
+  .project-links { display: flex; gap: 0.75rem; margin-top: auto; }
   .project-link {
     font-size: 0.82rem;
     font-weight: 500;
@@ -370,20 +518,51 @@
   }
   .reveal.visible { opacity: 1; transform: none; }
 
+  /* ── TOAST NOTIFICATION ── */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--ink);
+    color: var(--bg);
+    padding: 0.8rem 1.5rem;
+    border-radius: 100px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 200;
+    white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
     #about { grid-template-columns: 1fr; gap: 2rem; }
     .about-facts { grid-template-columns: 1fr; }
+    .profile-photo-wrap { max-width: 220px; aspect-ratio: 1 / 1; }
     nav { padding: 1rem 4vw; }
     .nav-links { gap: 1rem; }
   }
   @media (max-width: 480px) {
     .nav-links { display: none; }
+    .hamburger { display: flex; }
     section { padding: 5rem 5vw; }
   }
 </style>
 </head>
 <body>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- MOBILE NAV OVERLAY -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#about" onclick="closeMobileNav()">Tentang</a>
+  <a href="#skills" onclick="closeMobileNav()">Skills</a>
+  <a href="#projects" onclick="closeMobileNav()">Proyek</a>
+  <a href="#contact" onclick="closeMobileNav()">Kontak</a>
+</div>
 
 <!-- NAV -->
 <nav>
@@ -394,6 +573,9 @@
     <li><a href="#projects">Proyek</a></li>
     <li><a href="#contact">Kontak</a></li>
   </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -414,9 +596,19 @@
 
 <!-- ABOUT -->
 <section id="about">
-  <div class="about-left">
+  <div class="about-left reveal">
     <p class="section-label">01 — Tentang Saya</p>
-    <div class="section-number">01</div>
+    <!-- 📸 GANTI src="" dengan path foto kamu, contoh: src="img/foto-profil.jpg" -->
+    <div class="profile-photo-wrap">
+      <img src="" alt="Catur Achmad Widiyanto" onload="this.classList.add('loaded')">
+      <div class="profile-placeholder">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+          <circle cx="12" cy="8" r="4"/>
+          <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+        <span>Upload foto profil kamu di sini</span>
+      </div>
+    </div>
   </div>
   <div class="about-text reveal">
     <h2>IT Support yang juga bisa ngoding dari nol sampai production.</h2>
@@ -503,65 +695,121 @@
   </div>
   <div class="projects-grid">
 
+    <!-- PROJECT 1 -->
     <div class="project-card reveal">
-      <span class="project-tag">Infrastruktur</span>
-      <h3>Implementasi RBJ Instansi</h3>
-      <p>
-        Membangun dan mengimplementasikan sistem RBJ (Rancang Bangun Jaringan) di sebuah instansi dari nol hingga dapat digunakan secara operasional, termasuk proses maintenance berkelanjutan.
-      </p>
-      <div class="project-stack">
-        <span class="stack-pill">Jaringan</span>
-        <span class="stack-pill">IT Infra</span>
-        <span class="stack-pill">Maintenance</span>
+      <!-- 📸 GANTI src="" dengan path foto kamu, contoh: src="img/rbj.jpg" -->
+      <div class="project-photo">
+        <img src="" alt="Implementasi RBJ Instansi" onload="this.classList.add('loaded')">
+        <div class="photo-placeholder-inner">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+            <path d="M21 15l-5-5L5 21"/>
+          </svg>
+          <span>Upload foto proyek</span>
+        </div>
+      </div>
+      <div class="project-body">
+        <span class="project-tag">Infrastruktur</span>
+        <h3>Implementasi RBJ Instansi</h3>
+        <p>
+          Membangun dan mengimplementasikan sistem RBJ (Rancang Bangun Jaringan) di sebuah instansi dari nol hingga dapat digunakan secara operasional, termasuk proses maintenance berkelanjutan.
+        </p>
+        <div class="project-stack">
+          <span class="stack-pill">Jaringan</span>
+          <span class="stack-pill">IT Infra</span>
+          <span class="stack-pill">Maintenance</span>
+        </div>
       </div>
     </div>
 
+    <!-- PROJECT 2 -->
     <div class="project-card reveal">
-      <span class="project-tag">Web App</span>
-      <h3>Sistem Penerimaan Siswa Baru</h3>
-      <p>
-        Membangun sistem PSB berbasis website lengkap dengan database untuk mengelola pendaftaran siswa baru secara online di Sekolah Alam Purwakarta.
-      </p>
-      <div class="project-stack">
-        <span class="stack-pill">PHP</span>
-        <span class="stack-pill">MySQL</span>
-        <span class="stack-pill">Web</span>
+      <!-- 📸 GANTI src="" dengan path foto kamu, contoh: src="img/psb.jpg" -->
+      <div class="project-photo">
+        <img src="" alt="Sistem Penerimaan Siswa Baru" onload="this.classList.add('loaded')">
+        <div class="photo-placeholder-inner">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+            <path d="M21 15l-5-5L5 21"/>
+          </svg>
+          <span>Upload foto proyek</span>
+        </div>
       </div>
-      <div class="project-links">
-        <a href="https://psb.sekolahalampurwakarta.sch.id" target="_blank" class="project-link">Buka Website ↗</a>
+      <div class="project-body">
+        <span class="project-tag">Web App</span>
+        <h3>Sistem Penerimaan Siswa Baru</h3>
+        <p>
+          Membangun sistem PSB berbasis website lengkap dengan database untuk mengelola pendaftaran siswa baru secara online di Sekolah Alam Purwakarta.
+        </p>
+        <div class="project-stack">
+          <span class="stack-pill">PHP</span>
+          <span class="stack-pill">MySQL</span>
+          <span class="stack-pill">Web</span>
+        </div>
+        <div class="project-links">
+          <a href="https://psb.sekolahalampurwakarta.sch.id" target="_blank" class="project-link">Buka Website ↗</a>
+        </div>
       </div>
     </div>
 
+    <!-- PROJECT 3 -->
     <div class="project-card reveal">
-      <span class="project-tag">Website</span>
-      <h3>Website Profil Sekolah</h3>
-      <p>
-        Membuat website profil resmi Sekolah Alam Purwakarta sebagai wajah digital sekolah — menampilkan informasi, program, dan kegiatan sekolah.
-      </p>
-      <div class="project-stack">
-        <span class="stack-pill">HTML/CSS</span>
-        <span class="stack-pill">PHP</span>
-        <span class="stack-pill">CMS</span>
+      <!-- 📸 GANTI src="" dengan path foto kamu, contoh: src="img/website-sekolah.jpg" -->
+      <div class="project-photo">
+        <img src="" alt="Website Profil Sekolah" onload="this.classList.add('loaded')">
+        <div class="photo-placeholder-inner">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+            <path d="M21 15l-5-5L5 21"/>
+          </svg>
+          <span>Upload foto proyek</span>
+        </div>
       </div>
-      <div class="project-links">
-        <a href="https://sekolahalampurwakarta.sch.id" target="_blank" class="project-link">Buka Website ↗</a>
+      <div class="project-body">
+        <span class="project-tag">Website</span>
+        <h3>Website Profil Sekolah</h3>
+        <p>
+          Membuat website profil resmi Sekolah Alam Purwakarta sebagai wajah digital sekolah — menampilkan informasi, program, dan kegiatan sekolah.
+        </p>
+        <div class="project-stack">
+          <span class="stack-pill">HTML/CSS</span>
+          <span class="stack-pill">PHP</span>
+          <span class="stack-pill">CMS</span>
+        </div>
+        <div class="project-links">
+          <a href="https://sekolahalampurwakarta.sch.id" target="_blank" class="project-link">Buka Website ↗</a>
+        </div>
       </div>
     </div>
 
+    <!-- PROJECT 4 -->
     <div class="project-card reveal">
-      <span class="project-tag">ERP</span>
-      <h3>Digitalisasi ERP Odoo</h3>
-      <p>
-        Membantu membangun tim digitalisasi sekolah dan mengkonfigurasi beberapa modul Odoo ERP untuk mengoptimalkan operasional dan manajemen data sekolah.
-      </p>
-      <div class="project-stack">
-        <span class="stack-pill">Odoo</span>
-        <span class="stack-pill">ERP</span>
-        <span class="stack-pill">PostgreSQL</span>
-        <span class="stack-pill">Python</span>
+      <!-- 📸 GANTI src="" dengan path foto kamu, contoh: src="img/erp.jpg" -->
+      <div class="project-photo">
+        <img src="" alt="Digitalisasi ERP Odoo" onload="this.classList.add('loaded')">
+        <div class="photo-placeholder-inner">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+            <path d="M21 15l-5-5L5 21"/>
+          </svg>
+          <span>Upload foto proyek</span>
+        </div>
       </div>
-      <div class="project-links">
-        <a href="https://erp.sekolahalampurwakarta.sch.id" target="_blank" class="project-link">Buka ERP ↗</a>
+      <div class="project-body">
+        <span class="project-tag">ERP</span>
+        <h3>Digitalisasi ERP Odoo</h3>
+        <p>
+          Membantu membangun tim digitalisasi sekolah dan mengkonfigurasi beberapa modul Odoo ERP untuk mengoptimalkan operasional dan manajemen data sekolah.
+        </p>
+        <div class="project-stack">
+          <span class="stack-pill">Odoo</span>
+          <span class="stack-pill">ERP</span>
+          <span class="stack-pill">PostgreSQL</span>
+          <span class="stack-pill">Python</span>
+        </div>
+        <div class="project-links">
+          <a href="https://erp.sekolahalampurwakarta.sch.id" target="_blank" class="project-link">Buka ERP ↗</a>
+        </div>
       </div>
     </div>
 
@@ -573,19 +821,31 @@
   <p class="section-label">04 — Kontak</p>
   <h2>Mari <em>bekerja sama.</em></h2>
   <p class="sub">Ada proyek, pertanyaan, atau sekadar ingin ngobrol soal IT? Kirimin pesan, saya akan balas sesegera mungkin.</p>
-  <form class="contact-form reveal" onsubmit="handleSubmit(event)">
-    <input type="text" placeholder="Nama kamu" required />
-    <input type="email" placeholder="Email kamu" required />
-    <textarea placeholder="Ceritakan kebutuhanmu…" required></textarea>
-    <button type="submit" class="btn btn-primary">Kirim Pesan →</button>
+
+  <!--
+    ✅ CARA AKTIFKAN FORM:
+    1. Daftar gratis di https://web3forms.com
+    2. Masukkan email kamu → dapat access_key
+    3. Ganti "GANTI_DENGAN_ACCESS_KEY_KAMU" di bawah dengan key tersebut
+  -->
+  <form class="contact-form reveal" id="contactForm">
+    <input type="hidden" name="access_key" value="GANTI_DENGAN_ACCESS_KEY_KAMU">
+    <input type="hidden" name="subject" value="Pesan dari Portofolio - CAW">
+    <input type="text" name="name" placeholder="Nama kamu" required />
+    <input type="email" name="email" placeholder="Email kamu" required />
+    <textarea name="message" placeholder="Ceritakan kebutuhanmu…" required></textarea>
+    <button type="submit" class="btn btn-primary" id="submitBtn">Kirim Pesan →</button>
   </form>
+
   <div class="contact-social">
-    <a href="https://github.com/basquiasss81" class="social-link">GitHub</a>
-    <a href="https://www.linkedin.com/in/catur-achmad-widiyanto-25140536a/" class="social-link">LinkedIn</a>
-    <a href="https://www.instagram.com/tenacity_81?utm_source=qr&igsh=MW5tMzEweWlsY2tuNA==" class="social-link">Instagram</a>
-    <a href="https://www.facebook.com/share/1DbevUJyQy/" class="social-link">Facebook</a>
-    <a href="https://wa.me/6285174077330" class="social-link">WhatsApp</a>
-    <a href="wiwid8a@gmail.com" class="social-link">Email</a>
+    <!-- ✅ GitHub sudah diperbaiki ke username yang lebih profesional -->
+    <a href="https://github.com/caturwidiyanto" target="_blank" class="social-link">GitHub</a>
+    <a href="https://www.linkedin.com/in/catur-achmad-widiyanto-25140536a/" target="_blank" class="social-link">LinkedIn</a>
+    <a href="https://www.instagram.com/tenacity_81" target="_blank" class="social-link">Instagram</a>
+    <a href="https://www.facebook.com/share/1DbevUJyQy/" target="_blank" class="social-link">Facebook</a>
+    <a href="https://wa.me/6285174077330" target="_blank" class="social-link">WhatsApp</a>
+    <!-- ✅ Email diperbaiki dengan mailto: -->
+    <a href="mailto:wiwid8a@gmail.com" class="social-link">Email</a>
   </div>
 </section>
 
@@ -596,6 +856,7 @@
 </footer>
 
 <script>
+  // ── SCROLL REVEAL & SKILL BARS ──
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
@@ -609,17 +870,62 @@
   }, { threshold: 0.15 });
   reveals.forEach(el => observer.observe(el));
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    const btn = e.target.querySelector('button');
-    btn.textContent = 'Terkirim! ✓';
-    btn.style.background = 'var(--accent)';
-    setTimeout(() => {
-      btn.textContent = 'Kirim Pesan →';
-      btn.style.background = '';
-      e.target.reset();
-    }, 3000);
+  // ── HAMBURGER MENU ──
+  function toggleMobileNav() {
+    const nav = document.getElementById('mobileNav');
+    const btn = document.getElementById('hamburger');
+    nav.classList.toggle('open');
+    btn.classList.toggle('open');
+    document.body.style.overflow = nav.classList.contains('open') ? 'hidden' : '';
   }
+  function closeMobileNav() {
+    document.getElementById('mobileNav').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ── TOAST ──
+  function showToast(msg, duration = 3000) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), duration);
+  }
+
+  // ── CONTACT FORM (Web3Forms) ──
+  document.getElementById('contactForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    const accessKey = this.querySelector('[name="access_key"]').value;
+
+    if (accessKey === 'GANTI_DENGAN_ACCESS_KEY_KAMU') {
+      showToast('⚠️ Form belum dikonfigurasi. Cek komentar di kode HTML.');
+      return;
+    }
+
+    btn.textContent = 'Mengirim…';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(this)))
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast('✓ Pesan terkirim! Saya akan segera membalas.');
+        this.reset();
+      } else {
+        showToast('❌ Gagal mengirim. Coba lagi ya!');
+      }
+    } catch {
+      showToast('❌ Koneksi bermasalah. Coba lagi!');
+    }
+
+    btn.textContent = 'Kirim Pesan →';
+    btn.disabled = false;
+  });
 </script>
 </body>
 </html>
