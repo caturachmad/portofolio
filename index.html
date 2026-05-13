@@ -445,6 +445,79 @@
   }
   .project-link:hover { opacity: 0.7; }
 
+  /* ── CERTIFICATES ── */
+  #certificates { border-top: 1px solid var(--border); }
+  #certificates .section-header { margin-bottom: 3rem; }
+  #certificates h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.02em;
+  }
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+  .cert-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform 0.22s, box-shadow 0.22s;
+  }
+  .cert-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(26,26,24,0.08); }
+  .cert-preview {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cert-preview img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: none;
+  }
+  .cert-preview img.loaded { display: block; }
+  .cert-preview img.loaded + .cert-placeholder { display: none; }
+  .cert-placeholder {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 0.5rem;
+    pointer-events: none;
+  }
+  .cert-placeholder svg { opacity: 0.25; }
+  .cert-placeholder span {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--ink3);
+    text-transform: uppercase;
+  }
+  .cert-body { padding: 1.2rem 1.4rem; }
+  .cert-issuer {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+  .cert-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1rem;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+    line-height: 1.3;
+  }
+  .cert-date {
+    font-size: 0.78rem;
+    color: var(--ink3);
+    font-family: 'DM Mono', monospace;
+  }
+
   /* ── CONTACT ── */
   #contact {
     background: var(--bg2);
@@ -561,6 +634,7 @@
   <a href="#about" onclick="closeMobileNav()">Tentang</a>
   <a href="#skills" onclick="closeMobileNav()">Skills</a>
   <a href="#projects" onclick="closeMobileNav()">Proyek</a>
+  <a href="#certificates" onclick="closeMobileNav()">Sertifikat</a>
   <a href="#contact" onclick="closeMobileNav()">Kontak</a>
 </div>
 
@@ -571,6 +645,7 @@
     <li><a href="#about">Tentang</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#projects">Proyek</a></li>
+    <li><a href="#certificates">Sertifikat</a></li>
     <li><a href="#contact">Kontak</a></li>
   </ul>
   <button class="hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
@@ -816,9 +891,106 @@
   </div>
 </section>
 
+<!-- CERTIFICATES -->
+<section id="certificates">
+  <div class="section-header">
+    <div>
+      <p class="section-label">04 — Sertifikasi</p>
+      <h2>Lisensi & sertifikat.</h2>
+    </div>
+  </div>
+  <div class="cert-grid">
+
+    <!-- CERT 1 — 📄 Ganti src="" dengan path file sertifikat, contoh: src="img/cert-mtcna.jpg" -->
+    <div class="cert-card reveal">
+      <div class="cert-preview">
+        <img src="" alt="Sertifikat 1" onload="this.classList.add('loaded')">
+        <div class="cert-placeholder">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <circle cx="12" cy="15" r="2"/>
+            <path d="M10 20v-1a2 2 0 0 1 4 0v1"/>
+          </svg>
+          <span>Upload sertifikat</span>
+        </div>
+      </div>
+      <div class="cert-body">
+        <div class="cert-issuer">Nama Lembaga</div>
+        <div class="cert-name">Nama Sertifikat</div>
+        <div class="cert-date">Bulan Tahun</div>
+      </div>
+    </div>
+
+    <!-- CERT 2 -->
+    <div class="cert-card reveal">
+      <div class="cert-preview">
+        <img src="" alt="Sertifikat 2" onload="this.classList.add('loaded')">
+        <div class="cert-placeholder">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <circle cx="12" cy="15" r="2"/>
+            <path d="M10 20v-1a2 2 0 0 1 4 0v1"/>
+          </svg>
+          <span>Upload sertifikat</span>
+        </div>
+      </div>
+      <div class="cert-body">
+        <div class="cert-issuer">Nama Lembaga</div>
+        <div class="cert-name">Nama Sertifikat</div>
+        <div class="cert-date">Bulan Tahun</div>
+      </div>
+    </div>
+
+    <!-- CERT 3 -->
+    <div class="cert-card reveal">
+      <div class="cert-preview">
+        <img src="" alt="Sertifikat 3" onload="this.classList.add('loaded')">
+        <div class="cert-placeholder">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <circle cx="12" cy="15" r="2"/>
+            <path d="M10 20v-1a2 2 0 0 1 4 0v1"/>
+          </svg>
+          <span>Upload sertifikat</span>
+        </div>
+      </div>
+      <div class="cert-body">
+        <div class="cert-issuer">Nama Lembaga</div>
+        <div class="cert-name">Nama Sertifikat</div>
+        <div class="cert-date">Bulan Tahun</div>
+      </div>
+    </div>
+
+    <!-- CERT 4 -->
+    <div class="cert-card reveal">
+      <div class="cert-preview">
+        <img src="" alt="Sertifikat 4" onload="this.classList.add('loaded')">
+        <div class="cert-placeholder">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <circle cx="12" cy="15" r="2"/>
+            <path d="M10 20v-1a2 2 0 0 1 4 0v1"/>
+          </svg>
+          <span>Upload sertifikat</span>
+        </div>
+      </div>
+      <div class="cert-body">
+        <div class="cert-issuer">Nama Lembaga</div>
+        <div class="cert-name">Nama Sertifikat</div>
+        <div class="cert-date">Bulan Tahun</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section id="contact">
-  <p class="section-label">04 — Kontak</p>
+  <p class="section-label">05 — Kontak</p>
   <h2>Mari <em>bekerja sama.</em></h2>
   <p class="sub">Ada proyek, pertanyaan, atau sekadar ingin ngobrol soal IT? Kirimin pesan, saya akan balas sesegera mungkin.</p>
 
